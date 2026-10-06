@@ -1,0 +1,293 @@
+ <!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TikBoost Niger</title>
+    <style>
+        :root {
+            --bg-color: #010101;
+            --card-bg: #121212;
+            --primary-pink: #fe2c55;
+            --primary-cyan: #25f4ee;
+            --text-color: #ffffff;
+            --text-muted: #a0a0a0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .app-container {
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--primary-pink));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #222;
+        }
+
+        .card-pay {
+            background-color: #161b22;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--primary-cyan);
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid #333;
+            background: #000;
+            color: #fff;
+            box-sizing: border-box;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(45deg, var(--primary-pink), #e00435);
+            color: white;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+
+        .btn-pay {
+            background: linear-gradient(45deg, var(--primary-cyan), #00b4d8);
+            color: #000;
+            font-weight: 800;
+        }
+
+        .btn-copy {
+            margin-top: 8px;
+            padding: 8px;
+            font-size: 12px;
+            background: #222;
+            border: 1px solid #444;
+            color: var(--primary-cyan);
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .comment-item {
+            background: #1a1a1a;
+            border-left: 4px solid var(--primary-cyan);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .comment-item.question { border-color: var(--primary-cyan); }
+        .comment-item.debate { border-color: #ffb703; }
+        .comment-item.fan { border-color: var(--primary-pink); }
+
+        .badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .badge-question { background: rgba(37, 244, 238, 0.2); color: var(--primary-cyan); }
+        .badge-debate { background: rgba(255, 183, 3, 0.2); color: #ffb703; }
+        .badge-fan { background: rgba(254, 44, 85, 0.2); color: var(--primary-pink); }
+
+        .comment-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .advice {
+            font-size: 13px;
+            color: #fff;
+            background: #0d0d0d;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px dashed #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <div class="logo">🚀 TikBoost Niger</div>
+        <div class="subtitle">Analyse tes commentaires & booste ton engagement</div>
+    </div>
+
+    <!-- Section formulaire d'analyse -->
+    <div class="card">
+        <label for="video-url">Lien de ta vidéo TikTok :</label>
+        <input type="text" id="video-url" value="https://www.tiktok.com/@niamey_creator/video/1234567">
+        
+        <button onclick="analyserCommentaires()">⚡ Extraire les 6 commentaires clés</button>
+    </div>
+
+    <!-- Section résultats -->
+    <div id="results" class="card" style="display:none;">
+        <div style="margin-bottom:15px;">
+            <h3 style="margin:0; font-size:16px;">🎯 Vos 6 Réponses Suggérées</h3>
+        </div>
+        <div id="comments-list"></div>
+    </div>
+
+    <!-- Section Paiement Mobile Money -->
+    <div class="card-pay">
+        <h3 style="margin-top:0; color: var(--primary-cyan); font-size: 18px;">💳 Pass Premium TikBoost</h3>
+        <p style="font-size:13px; color:#ccc; margin-bottom: 15px;">Débloquez des analyses illimitées pour booster tous vos comptes TikTok.</p>
+        
+        <label for="pay-method">Moyen de paiement local :</label>
+        <select id="pay-method">
+            <option value="Airtel Money">🔴 Airtel Money Niger</option>
+            <option value="Moov Money">🔵 Moov Money (Flooz)</option>
+            <option value="Zamani Cash">🟠 Zamani Cash</option>
+        </select>
+
+        <label for="pay-phone">Numéro de téléphone (+227) :</label>
+        <input type="text" id="pay-phone" placeholder="Ex: 96000000 ou 90000000" value="90123456">
+
+        <label for="pay-plan">Choisissez votre offre :</label>
+        <select id="pay-plan">
+            <option value="100 FCFA">⚡ Pass 1 Journée — 100 FCFA</option>
+            <option value="500 FCFA">🚀 Pass Semaine — 500 FCFA</option>
+            <option value="1500 FCFA">👑 Pass Mensuel — 1 500 FCFA</option>
+        </select>
+
+        <button class="btn-pay" onclick="effectuerPaiement()">📱 Payer avec Mobile Money</button>
+    </div>
+</div>
+
+<script>
+function analyserCommentaires() {
+    const resultsDiv = document.getElementById('results');
+    const commentsList = document.getElementById('comments-list');
+    
+    const demoData = [
+        { 
+            type: 'question', 
+            badge: '❓ Réponse en Vidéo', 
+            text: "C'est dans quel quartier à Niamey et c'est combien le prix ?", 
+            reponse: "C'est situé à Plateau ! Écris-moi directement en message privé pour avoir tous les tarifs."
+        },
+        { 
+            type: 'question', 
+            badge: '❓ Réponse en Vidéo', 
+            text: "Tu peux faire une partie 2 sur ce sujet ?", 
+            reponse: "La partie 2 arrive bientôt ! Abonne-toi pour ne pas la rater."
+        },
+        { 
+            type: 'debate', 
+            badge: '🔥 Relance de Débat', 
+            text: "Moi je trouve que c'est trop cher pour le Niger...", 
+            reponse: "La qualité a un prix frérot ! Selon toi, quel serait le juste prix ?"
+        },
+        { 
+            type: 'debate', 
+            badge: '🔥 Relance de Débat', 
+            text: "Frérot c'est pas la bonne méthode mais bon test !", 
+            reponse: "Ah oui ? Dis-moi en commentaire quelle méthode tu utilises toi !"
+        },
+        { 
+            type: 'fan', 
+            badge: '❤ Top Fan à Épingler', 
+            text: "Franchement la meilleure vidéo de la semaine 🇳🇪", 
+            reponse: "Merci beaucoup mon frère ! Bienvenue dans la communauté !"
+        },
+        { 
+            type: 'fan', 
+            badge: '❤ Top Fan à Épingler', 
+            text: "Je m'abonne direct, continue comme ça !", 
+            reponse: "Merci pour le soutien ! On ensemble !"
+        }
+    ];
+
+    commentsList.innerHTML = '';
+    
+    demoData.forEach(item => {
+        const commentEl = document.createElement('div');
+        commentEl.className = `comment-item ${item.type}`;
+        
+        let badgeClass = 'badge-question';
+        if (item.type === 'debate') badgeClass = 'badge-debate';
+        if (item.type === 'fan') badgeClass = 'badge-fan';
+
+        commentEl.innerHTML = `
+            <span class="badge ${badgeClass}">${item.badge}</span>
+            <div class="comment-text">"${item.text}"</div>
+            <div class="advice">👉 <b>Réponse :</b> ${item.reponse}</div>
+            <button class="btn-copy" onclick="copierTexte('${item.reponse.replace(/'/g, "\\'")}')">📋 Copier la réponse</button>
+        `;
+        commentsList.appendChild(commentEl);
+    });
+
+    resultsDiv.style.display = 'block';
+}
+
+function copierTexte(texte) {
+    navigator.clipboard.writeText(texte);
+    alert("Réponse copiée ! Vous pouvez la coller sur TikTok.");
+}
+
+function effectuerPaiement() {
+    const methode = document.getElementById('pay-method').value;
+    const telephone = document.getElementById('pay-phone').value;
+    const offre = document.getElementById('pay-plan').value;
+
+    if (!telephone || telephone.trim().length < 8) {
+        alert("Veuillez saisir un numéro de téléphone valide au Niger.");
+        return;
+    }
+
+    alert(`📲 Demande de paiement envoyée !\n\n• Opérateur : ${methode}\n• Numéro : +227 ${telephone}\n• Montant : ${offre}\n\nVérifiez votre téléphone et entrez votre code PIN pour valider la transaction.`);
+}
+</script>
+
+</body>
+</html>
